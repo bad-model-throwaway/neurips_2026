@@ -1,0 +1,40 @@
+<!--
+Vendored from MJPC (google-deepmind/mujoco_mpc):
+  mjpc/tasks/humanoid/stand/task.xml
+
+Copyright 2022 DeepMind Technologies Limited
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+http://www.apache.org/licenses/LICENSE-2.0
+
+Modifications from upstream:
+  - include paths updated for local (../common.xml, ../humanoid_modified.xml)
+  - <option timestep="0.005"/> added (dm_control humanoid default; the MJPC
+    planner sets physics dt programmatically via agent_timestep, but our Python
+    pipeline uses sim_dt * n_substeps = ctrl_dt, so an explicit timestep is
+    required). With n_substeps=3 in HumanoidStandDynamics this gives
+    ctrl_dt=0.015 s, matching MJPC's agent_timestep.
+  - <custom> planner settings block removed — carried in PROPOSAL_CONFIGS
+    instead (P=3, N=10, sigma=0.125, horizon=0.35 s -> 23 planner steps, cubic).
+    Upstream had: agent_horizon=0.35, agent_timestep=0.015,
+    sampling_spline_points=3, sampling_exploration=0.05, residual_Height Goal
+    param = 1.4 (min 0.0, max 1.5); we use 1.4 as the hard-coded height goal in
+    HumanoidStandDynamics.
+  - <user> cost sensors removed — residual computed in
+    HumanoidStandDynamics.cost_function (5 terms, matches current stand.cc).
+  - <sensor> block trimmed to the subtreelinvel and subtreecom declarations
+    required to populate data.subtree_linvel / data.subtree_com; other MJPC
+    estimator/trace sensors are irrelevant to the residual.
+-->
+<mujoco model="Humanoid Stand">
+  <include file="../common.xml"/>
+  <include file="../humanoid_modified.xml"/>
+
+  <size memory="400K"/>
+  <option timestep="0.005"/>
+
+  <sensor>
+    <subtreelinvel name="torso_subtreelinvel" body="torso"/>
+    <subtreecom    name="torso_subtreecom"    body="torso"/>
+  </sensor>
+</mujoco>

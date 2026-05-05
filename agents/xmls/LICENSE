@@ -1,0 +1,6 @@
+The MJCF XML model files in this directory are copied from
+google-deepmind/mujoco_playground at commit dd38c28.
+
+Copyright 2025 DeepMind Technologies Limited.
+Licensed under the Apache License, Version 2.0.
+https://github.com/google-deepmind/mujoco_playground/blob/main/LICENSE

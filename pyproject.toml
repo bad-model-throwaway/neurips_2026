@@ -1,0 +1,21 @@
+[project]
+name = "cartpole-mpc"
+version = "0.1.0"
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "scipy",
+    "pytest",
+    "pytest-xdist",
+    "mujoco",
+    "imageio[ffmpeg]",
+    "cairosvg",
+    "tqdm",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+addopts = ["-m", "not visual", "-n", "12"]
+markers = [
+    "visual: opt-in rendering tests that produce artifacts under data/plots/ (requires a GL context; `pytest -m visual` to run)",
+]

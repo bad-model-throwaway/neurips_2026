@@ -1,0 +1,23 @@
+# Generated data
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.so
+*.c
+
+# Claude Code local settings
+.claude/
+
+# macOS
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
+
+# uv
+.venv/
